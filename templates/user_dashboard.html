@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User Dashboard</h1>
+    <div class="dashboard">
+        <h2>Welcome, {{ current_user.username }}!</h2>
+        <p>Your email: {{ current_user.email }}</p>
+        <h3> 
+            <a href="{{ url_for('user.cart_list') }}">Cart</a>
+            <a href="{{ url_for('user.add_to_cart') }}">Add to cart</a>
+            <a href="{{ url_for('user.delete_product') }}">Delete product</a>
+        <h3>
+        
+        <h4>Your Orders</h3>
+        <ul>
+            {% for order in current_user.orders %}
+                <li>Order #{{ order.id }} - {{ order.status }} - {{ order.created_at.strftime('%Y-%m-%d') }}</li>
+            {% else %}
+                <li>No orders found.</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Account Settings</h3>
+        <a href="{{ url_for('edit_profile') }}">Edit Profile</a>
+        <a href="{{ url_for('change_password') }}">Change Password</a>
+    </div>
+{% endblock %}

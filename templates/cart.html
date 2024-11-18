@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Tavo krepšelis</h1>
+{% if cart_items %}
+<table>
+    <tr>
+        <th>Prekė</th>
+        <th>Kiekis</th>
+        <th>Kaina</th>
+        <th>Veiksmai</th>
+    </tr>
+    {% for item in cart_items %}
+    <tr>
+        <td>{{ item.product.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.product.price * item.quantity }}€</td>
+        <td>
+            <form method="POST" action="{{ url_for('delete_product', cart_item_id=item.id) }}">
+                <button type="submit">Pašalinti</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<p>Bendra suma: {{ sum(item.product.price * item.quantity for item in cart_items) }}€</p>
+{% else %}
+<p>Krepšelis tuščias.</p>
+{% endif %}
+<a href="{{ url_for('product_list_all') }}">Grįžti prie prekių sąrašo</a>
+
+{% endblock %}

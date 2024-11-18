@@ -1,0 +1,25 @@
+from app import app
+from database.db import db
+from models.prekes import Product
+
+# Pridėkite pradinės informacijos
+products = [
+    Product(name="pelė", price=50.0, stock=10, description="Stellseries X90."),
+    Product(name="Klaviatūra", price=30.0, stock=15, description="Mechaninė."),
+    Product(name="Monitorius", price=100.00, stock=5, description="AOC 144hz 24coliai."),
+    Product(name="Kilimėlis pelei", price=18.80, stock=20, description="Kilimėlis pelei 100x50."),
+    Product(name="Ausinės", price=25.50, stock=7, description="HyperX cloud 2 ausinės žaidimams"),
+]
+
+# Inicializuokite duomenų bazę ir įrašykite produktus
+with app.app_context():
+    db.create_all()  # Įsitikinkite, kad lentelės sukurtos
+    for product in products:
+        db.session.add(product)
+    db.session.commit()
+    print("Duomenų bazė užpildyta pradinėmis prekėmis.")
+    
+    
+# base   {% comment %} <a href="{{ url_for('user_dashboard') }}">Dashboard</a> {% endcomment %}  {% else %}
+                  
+                    # <a href="{{ url_for('cart') }}">Cart</a>
